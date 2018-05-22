@@ -2,12 +2,11 @@ package com.ivson.modelagemconceitual.dto;
 
 import java.io.Serializable;
 
-import com.ivson.modelagemconceitual.model.Categoria;
-
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.validator.constraints.Length;;
+import org.hibernate.validator.constraints.Length;
+
+import com.ivson.modelagemconceitual.model.Categoria;;
 
 public class CategoriaDTO implements Serializable {
 
