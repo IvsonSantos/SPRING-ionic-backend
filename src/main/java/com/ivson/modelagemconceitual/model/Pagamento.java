@@ -25,7 +25,7 @@ public abstract class Pagamento implements Serializable {
 	@Id
 	private Integer id;
 	
-	private Integer estadoPagamento;
+	private Integer estado;
 	
 	// dessa forma o Pagamento nao tem autoincremento de ID, mas usa o mesmo do PEDIDO
 	@OneToOne
@@ -38,10 +38,10 @@ public abstract class Pagamento implements Serializable {
 
 	}
 
-	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
+	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estadoPagamento = estadoPagamento.getCod();
+		this.estado = (estado == null) ? null : estado.getCod();
 		this.pedido = pedido;
 	}
 
@@ -49,8 +49,8 @@ public abstract class Pagamento implements Serializable {
 		return id;
 	}
 
-	public EstadoPagamento getEstadoPagamento() {
-		return EstadoPagamento.toEnum(estadoPagamento);
+	public EstadoPagamento getEstado() {
+		return EstadoPagamento.toEnum(estado);
 	}
 
 	public Pedido getPedido() {
@@ -61,8 +61,8 @@ public abstract class Pagamento implements Serializable {
 		this.id = id;
 	}
 
-	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-		this.estadoPagamento = estadoPagamento.getCod();
+	public void setEstado(EstadoPagamento estado) {
+		this.estado = estado.getCod();
 	}
 
 	public void setPedido(Pedido pedido) {
