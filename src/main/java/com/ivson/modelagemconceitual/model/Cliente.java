@@ -60,7 +60,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();		// para pegar o codigo do ENUM
+		this.tipo = (tipo == null) ? null : tipo.getCod();		// para pegar o codigo do ENUM
 	}
 
 	public static long getSerialversionuid() {
