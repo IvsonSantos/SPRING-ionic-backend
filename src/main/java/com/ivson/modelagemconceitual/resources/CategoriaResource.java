@@ -90,6 +90,14 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	/**
+	 * Busca paginada
+	 * @param page
+	 * @param linesPerPage
+	 * @param orderBy
+	 * @param direction
+	 * @return
+	 */
 	@GetMapping("/page")
 	public ResponseEntity<Page<CategoriaDTO>> findpage(
 			@RequestParam(value="page", defaultValue="0") Integer page, // opcional, se nao informar, vai pra primeira pagina (0)
