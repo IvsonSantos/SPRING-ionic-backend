@@ -38,6 +38,14 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	
+	/**
+	 * Todo GET é serializado pelo JSON
+	 * @return
+	 */
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
 
 	/**
 	 * Para a chave composta
