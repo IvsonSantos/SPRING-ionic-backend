@@ -11,10 +11,12 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ivson.modelagemconceitual.model.enuns.EstadoPagamento;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)	// para superclasses
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") // a classe paramento tem um campo adicional '@type'
 public abstract class Pagamento implements Serializable {
 	
 	/**

@@ -55,6 +55,11 @@ public class ItemPedido implements Serializable {
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+	
+	public void setPedido(Pedido pedido) {
+		// dentro do ID composto
+		id.setPedido(pedido);
+	}
 
 	/**
 	 * Para a chave composta
@@ -64,6 +69,10 @@ public class ItemPedido implements Serializable {
 		return id.getProduto();
 	}
 	
+	public void setProduto(Produto produto) {
+		// dentro do ID composto
+		id.setProduto(produto);
+	}
 	
 	public ItemPedidoPK getId() {
 		return id;

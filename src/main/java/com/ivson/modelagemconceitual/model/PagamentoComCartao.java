@@ -2,9 +2,11 @@ package com.ivson.modelagemconceitual.model;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.ivson.modelagemconceitual.model.enuns.EstadoPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 
 	/**
