@@ -30,6 +30,11 @@ import com.ivson.modelagemconceitual.repositories.PagamentoRepository;
 import com.ivson.modelagemconceitual.repositories.PedidoRepository;
 import com.ivson.modelagemconceitual.repositories.ProdutoRepository;
 
+/**
+ * SERVICE passa a ser um compoennte do Spring, ai com isto pode ser injetado
+ * @author Santo
+ *
+ */
 @Service
 public class DBService {
 
