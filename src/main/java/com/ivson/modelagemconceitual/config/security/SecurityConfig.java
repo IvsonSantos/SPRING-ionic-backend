@@ -1,6 +1,7 @@
 package com.ivson.modelagemconceitual.config.security;
 
-import org.assertj.core.util.Arrays;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**"
+			"/categorias/**",
+			"/clientes/**"
 	};
 	
 	/**
@@ -37,14 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		
 		// Se no profile ativo tiver o profile "test", libera o H2 (que controla sessao) 
-//		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-//			// libera o acesso
-//			http.headers().frameOptions().disable();
-//		}
-			
-		
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+			http.headers().frameOptions().disable();
+		}
 		
 		// se tiver um CorsConfiguration definido, ele é chamado aqui
 		http.cors()

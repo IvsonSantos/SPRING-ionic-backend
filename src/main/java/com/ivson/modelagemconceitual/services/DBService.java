@@ -20,6 +20,7 @@ import com.ivson.modelagemconceitual.model.PagamentoComCartao;
 import com.ivson.modelagemconceitual.model.Pedido;
 import com.ivson.modelagemconceitual.model.Produto;
 import com.ivson.modelagemconceitual.model.enuns.EstadoPagamento;
+import com.ivson.modelagemconceitual.model.enuns.Perfil;
 import com.ivson.modelagemconceitual.model.enuns.TipoCliente;
 import com.ivson.modelagemconceitual.repositories.CategoriaRepository;
 import com.ivson.modelagemconceitual.repositories.CidadeRepository;
@@ -123,17 +124,25 @@ public class DBService {
 
 		// cliente
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "009", 
-								   TipoCliente.PESSOAFISICA,
-								   pe.encode("123"));
+								   TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("123456", "98764"));
+		
+		
+		// cliente ADMIN
+		Cliente cli2 = new Cliente(null, "Ana Costa", "maria@gmail.com", "98765432100", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		cli2.getTelefones().addAll(Arrays.asList("9900000"));
 
+		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "3333", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "4444", cli1, c2);
+		Endereco e3 = new Endereco(null, "Avenida Boa VIagem", "106", null, "Centro", "555500", cli2, c2);
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm");
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 13:32"), cli1, e1);

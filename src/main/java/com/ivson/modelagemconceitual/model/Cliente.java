@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ivson.modelagemconceitual.model.enuns.Perfil;
 import com.ivson.modelagemconceitual.model.enuns.TipoCliente;
 
 @Entity
@@ -53,12 +56,16 @@ public class Cliente implements Serializable {
 	@CollectionTable(name="TELEFONE")	// para dizer o nome da tabela
 	private Set<String> telefones = new HashSet<>();
 	
+	@ElementCollection(fetch=FetchType.EAGER)	// para trazer todos
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
 	@OneToMany(mappedBy="cliente")
 	@JsonIgnore
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
-
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
@@ -69,6 +76,7 @@ public class Cliente implements Serializable {
 		this.senha = senha;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();		// para pegar o codigo do ENUM
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public static long getSerialversionuid() {
@@ -170,6 +178,16 @@ public class Cliente implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream()
+					 .map(x -> Perfil.toEnum(x))    // para cada elemento dessa volecao X eu retorno a conversao
+				     .collect(Collectors.toSet());	// converte para conjunto
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 	
 }
