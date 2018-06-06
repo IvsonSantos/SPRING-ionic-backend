@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ivson.modelagemconceitual.security.JWTAuthenticationFilter;
+import com.ivson.modelagemconceitual.security.JWTAuthorizationFilter;
 import com.ivson.modelagemconceitual.security.JWTUtil;
 
 @Configuration
@@ -67,7 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(PUBLIC_MATCHERS).permitAll()	// para todos os endpoints deste vetor permitir fazer qualquer coisa									 
 			.anyRequest().authenticated();				// para qualquer outra requisição exige autenticação
 		
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		// registra os filtros criados
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));		
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		
 		// segurança, para não armazenar estado
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
