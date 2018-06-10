@@ -20,7 +20,6 @@ import com.ivson.modelagemconceitual.services.PedidoService;
 /**
  * PACKAGE resource = nome padrao para os recursos em uma API
  * @author Santo
- *
  */
 @RestController
 @RequestMapping(value="/pedidos")	// nome do Endpoint REST, por padrao de mercado no plural
@@ -30,17 +29,15 @@ public class PedidoResource {
 	private PedidoService service;	
 	
 	/**
-	 * RESPOSNSE ENTITY = ja traz um encapsulamento de uma resposta do tipo REST
+	 * RESPONSE ENTITY = ja traz um encapsulamento de uma resposta do tipo REST
 	 * @return
 	 */
 	@GetMapping("/{id}")
-//	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {		
 		Pedido obj = service.find(id); 		
 		return ResponseEntity.ok().body(obj);
 	}
-	
-	
+		
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
 				

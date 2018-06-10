@@ -30,8 +30,7 @@ public class ProdutoResource {
 	private ProdutoService service;	
 	
 	/**
-	 * RESPOSNSE ENTITY = ja traz um encapsulamento de uma resposta do tipo REST
-	 * @return
+	 * RESPONSE ENTITY = ja traz um encapsulamento de uma resposta do tipo REST
 	 */
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {		
@@ -41,19 +40,13 @@ public class ProdutoResource {
 	
 	/**
 	 * Busca paginada
-	 * @param page
-	 * @param linesPerPage
-	 * @param orderBy
-	 * @param direction
-	 * @return
 	 */
 	@GetMapping
 	public ResponseEntity<Page<ProdutoDTO>> findpage(
 			
 			// para passar no GET localhost/produtos/nome="teste"&&categorias="1,3,4"
 			@RequestParam(value="nome", defaultValue="") String nome,
-			@RequestParam(value="categorias", defaultValue="") String categorias,
-			
+			@RequestParam(value="categorias", defaultValue="") String categorias,			
 			@RequestParam(value="page", defaultValue="0") Integer page, // opcional, se nao informar, vai pra primeira pagina (0)
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 

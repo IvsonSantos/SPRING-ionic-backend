@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +38,8 @@ public class CategoriaResource {
 	private CategoriaService service;	
 	
 	/**
-	 * OP spring Boot ja tem um conversor automatico que transforma qqr objeto em um JSON
-	 * RESPOSNSE ENTITY = ja traz um encapsulamento de uma resposta do tipo REST
+	 * O spring Boot ja tem um conversor automatico que transforma qqr objeto em um JSON
+	 * RESPONSE ENTITY = ja traz um encapsulamento de uma resposta do tipo REST
 	 * @return
 	 */
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
@@ -47,6 +48,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")	// autoriza apenas os ADMIN
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO) {
 				
@@ -64,6 +66,7 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")	// autoriza apenas os ADMIN
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id) {
 		
@@ -73,6 +76,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")	// autoriza apenas os ADMIN
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
