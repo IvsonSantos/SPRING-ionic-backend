@@ -17,9 +17,12 @@ import com.ivson.modelagemconceitual.dto.ClienteNewDTO;
 import com.ivson.modelagemconceitual.model.Cidade;
 import com.ivson.modelagemconceitual.model.Cliente;
 import com.ivson.modelagemconceitual.model.Endereco;
+import com.ivson.modelagemconceitual.model.enuns.Perfil;
 import com.ivson.modelagemconceitual.model.enuns.TipoCliente;
 import com.ivson.modelagemconceitual.repositories.ClienteRepository;
 import com.ivson.modelagemconceitual.repositories.EnderecoRepository;
+import com.ivson.modelagemconceitual.security.UserSpringSecurity;
+import com.ivson.modelagemconceitual.services.exceptions.AuthorizationException;
 import com.ivson.modelagemconceitual.services.exceptions.DataIntegrityException;
 import com.ivson.modelagemconceitual.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,15 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Cliente find(Integer id) {
+		
+		/**
+		 * O usuario que nao é admin so pode ver os dados dele mesmo
+		 */
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> cliente = repo.findById(id);
 		return cliente.orElseThrow(() -> 
 				new ObjectNotFoundException("Objeto nao encontrado: " + Cliente.class.getName()));

@@ -18,11 +18,14 @@ public class UserSpringSecurity implements UserDetails {
 	private String email;
 	private String senha;
 	private Collection<? extends GrantedAuthority> auhtorities;
-	
-	
+		
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return auhtorities;
+	}
+	
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 
 	public UserSpringSecurity() {
