@@ -51,9 +51,11 @@ public class PedidoService {
 	
 	@Transactional
 	public Pedido insert(Pedido obj) {
+		
 		obj.setId(null);
 		obj.setInstant(new Date());
 		
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		// pedido novo ainda ta com o pagamento pendente
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
@@ -68,11 +70,16 @@ public class PedidoService {
 		
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());	//pega o preço
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			//ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());	//pega o preço
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		
 		itemPedidoRepository.saveAll(obj.getItens());
+		
+		System.out.println(obj);
+		
 		return obj;
 	}
 	
