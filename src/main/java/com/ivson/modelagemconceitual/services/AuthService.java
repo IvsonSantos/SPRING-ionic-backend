@@ -19,8 +19,8 @@ public class AuthService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
-	//@Autowired
-	//private EmailService emailService;
+	@Autowired
+	private EmailService emailService;
 	
 	private Random rand = new Random();
 	
@@ -35,7 +35,7 @@ public class AuthService {
 		cliente.setSenha(pe.encode(newPass));
 		
 		clienteRepository.save(cliente);
-		//emailService.sendNewPasswordEmail(cliente, newPass);
+		emailService.sendNewpasswordEmail(cliente, newPass);
 	}
 
 	private String newPassword() {
@@ -47,17 +47,21 @@ public class AuthService {
 		return new String(vet);
 	}
 
+	/**
+	 * Gera uma senha de 10 caracteres aleatorios
+	 * @return
+	 */
 	private char randomChar() {
 
 		int opt = rand.nextInt(3);
-		if (opt == 0) { // gera um digito
-			
-		} else if (opt == 1) { // gera letra maiuscula
-			
-		} else {	// gera letra minuscula
-			
-		}
 		
-		return '1';
+		if (opt == 0) { // gera um digito
+			return (char) (rand.nextInt(10) + 48); // digito 0 a 9
+		} else if (opt == 1) { // gera letra maiuscula
+			return (char) (rand.nextInt(26) + 65);	// 65 e o codigo UNICODE para a primeira letra maiuscula
+		} else {	// gera letra minuscula
+			return (char) (rand.nextInt(26) + 97);	// 65 e o codigo UNICODE para a primeira letra maiuscula
+		}
+
 	}
 }

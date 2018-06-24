@@ -54,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * Para permitir  o usuario GUEST se cadastrar no sistema
 	 */
 	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/clientes/**"
+			"/clientes/**",
+			"/auth/forgot/**"
 	};
 	
 	/**
